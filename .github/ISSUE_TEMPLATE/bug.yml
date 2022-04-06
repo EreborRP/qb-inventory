@@ -11,6 +11,11 @@ body:
         Thanks for taking the time to fill out this bug report.
         If you have any question, think about opening a discussion first to discuss the community about it!
         And think to fill up the title 😉
+  - type: checkboxes
+    id: common-issues
+    attributes:
+      label: Did you think about checking on the [common issues](https://github.com/qbcore-framework/qb-inventory/issues/266) issue on GitHub ?
+      required: true
   - type: textarea
     id: what-happened
     attributes:
