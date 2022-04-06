@@ -17,8 +17,8 @@ body:
       label: Common issues
       description: I've read the [common issues](https://github.com/qbcore-framework/qb-inventory/issues/266) ticket
       options:
-        label: Did you think about checking on the [common issues](https://github.com/qbcore-framework/qb-inventory/issues/266) issue on GitHub ?
-        required: true
+        - label: Did you think about checking on the [common issues](https://github.com/qbcore-framework/qb-inventory/issues/266) issue on GitHub ?
+          required: true
   - type: textarea
     id: what-happened
     attributes:
