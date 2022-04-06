@@ -54,7 +54,9 @@ body:
       label: Relevant server log output
       description: Please copy and paste any relevant server log output. This will be automatically formatted into code, so no need for backticks.
       render: shell
-  - type: file
+  - type: input
     id: client-logs
     attributes:
       label: Client console (F8) error screenshot
+      placeholder: |
+        Use https://imgur.com/upload or https://pasteboard.co/ to upload the screenshot, or just paste the logs here.
