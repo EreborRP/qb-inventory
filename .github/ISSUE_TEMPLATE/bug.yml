@@ -1,0 +1,60 @@
+name: Bug Report
+description: File a bug report
+title: "🐛 - "
+labels: ["bug"]
+assignees:
+  - restray
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report.
+        If you have any question, think about opening a discussion first to discuss the community about it!
+        And think to fill up the title 😉
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expected, what do you get on server/client?
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: reproducing
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen? 
+      placeholder: Tell us what you see! If you want to send a video, post it on youtube and paste the link in this field!
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of the inventory are you running?
+      options:
+        - old (Default)
+        - main branch (Insiders)
+        - dev branch (Developer)
+        - v1.0.0-prerelease (Beta Testers)
+    validations:
+      required: true
+  - type: dropdown
+    id: server-os
+    attributes:
+      label: The server operating system (OS), make sure that you're on x64 or amd64
+      multiple: true
+      options:
+        - Windows
+        - Linux Debian Based (Debian, Ubuntu)
+        - Linux Others
+  - type: textarea
+    id: server-logs
+    attributes:
+      label: Relevant server log output
+      description: Please copy and paste any relevant server log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: file
+    id: client-logs
+    attributes:
+      label: Client console (F8) error screenshot
