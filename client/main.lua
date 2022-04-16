@@ -33,6 +33,14 @@ local function GetClosestVending()
     return object
 end
 
+local function OpenVending()
+    local ShopItems = {}
+    ShopItems.label = "Vending Machine"
+    ShopItems.items = Config.VendingItem
+    ShopItems.slots = #Config.VendingItem
+    TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..math.random(1, 99), ShopItems)
+end
+
 local function DrawText3Ds(x, y, z, text)
 	SetTextScale(0.35, 0.35)
     SetTextFont(4)
@@ -527,7 +535,7 @@ RegisterCommand('inventory', function()
         if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
             local ped = PlayerPedId()
             local curVeh = nil
-            local VendingMachine = GetClosestVending()
+            if not Config.UseTarget then VendingMachine = GetClosestVending() end
 
             if IsPedInAnyVehicle(ped) then -- Is Player In Vehicle
                 local vehicle = GetVehiclePedIsIn(ped, false)
@@ -662,6 +670,13 @@ end
 RegisterNetEvent('qb-inventory:client:giveAnim', function()
     LoadAnimDict('mp_common')
 	TaskPlayAnim(PlayerPedId(), 'mp_common', 'givetake1_b', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+end)
+
+RegisterNetEvent('inventory:client:craftTarget',function(data)
+    local crafting = {}
+    crafting.label = "Crafting"
+    crafting.items = GetThresholdItems()
+    TriggerServerEvent("inventory:server:OpenInventory", "crafting", math.random(1, 99), crafting)
 end)
 
 -- NUI
@@ -868,27 +883,57 @@ CreateThread(function()
 end)
 
 CreateThread(function()
-    while true do
-        local sleep = 1000
-        if LocalPlayer.state['isLoggedIn'] then
-            local pos = GetEntityCoords(PlayerPedId())
-            local craftObject = GetClosestObjectOfType(pos, 2.0, Config.CraftingObject, false, false, false)
-            if craftObject ~= 0 then
-                local objectPos = GetEntityCoords(craftObject)
-                if #(pos - objectPos) < 1.5 then
-                    sleep = 0
-                    DrawText3Ds(objectPos.x, objectPos.y, objectPos.z + 1.0, "~g~E~w~ - Craft")
-                    if IsControlJustReleased(0, 38) then
-                        local crafting = {}
-                        crafting.label = "Crafting"
-                        crafting.items = GetThresholdItems()
-                        TriggerServerEvent("inventory:server:OpenInventory", "crafting", math.random(1, 99), crafting)
-                        sleep = 100
+    if Config.UseTarget then
+        exports['qb-target']:AddTargetModel(Config.VendingObjects, {
+            options = {
+                {
+                    icon = "fa-solid fa-cash-register",
+                    label = "Vending Machine",
+                    action = function()
+                        OpenVending()
+                    end
+                },
+            },
+            distance = 2.5
+        })
+    end
+end)
+
+CreateThread(function()
+    if Config.UseTarget then
+        exports['qb-target']:AddTargetModel(Config.CraftingObject, {
+            options = {
+                {
+                    event = "inventory:client:craftTarget",
+                    icon = "fas fa-tools",
+                    label = "Craft",
+                },
+            },
+            distance = 2.5,
+        })
+    else
+        while true do
+            local sleep = 1000
+            if LocalPlayer.state['isLoggedIn'] then
+                local pos = GetEntityCoords(PlayerPedId())
+                local craftObject = GetClosestObjectOfType(pos, 2.0, Config.CraftingObject, false, false, false)
+                if craftObject ~= 0 then
+                    local objectPos = GetEntityCoords(craftObject)
+                    if #(pos - objectPos) < 1.5 then
+                        sleep = 0
+                        DrawText3Ds(objectPos.x, objectPos.y, objectPos.z + 1.0, "~g~E~w~ - Craft")
+                        if IsControlJustReleased(0, 38) then
+                            local crafting = {}
+                            crafting.label = "Crafting"
+                            crafting.items = GetThresholdItems()
+                            TriggerServerEvent("inventory:server:OpenInventory", "crafting", math.random(1, 99), crafting)
+                            sleep = 100
+                        end
                     end
                 end
             end
+            Wait(sleep)
         end
-        Wait(sleep)
     end
 end)
 
