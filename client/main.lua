@@ -337,7 +337,7 @@ RegisterNetEvent('inventory:client:OpenInventory', function(PlayerAmmo, inventor
         SendNUIMessage({
             action = "open",
             inventory = inventory,
-            slots = MaxInventorySlots,
+            slots = QBCore.Config.Player.MaxInvSlots,
             other = other,
             maxweight = QBCore.Config.Player.MaxWeight,
             Ammo = PlayerAmmo,
@@ -352,7 +352,7 @@ RegisterNetEvent('inventory:client:UpdatePlayerInventory', function(isError)
         action = "update",
         inventory = PlayerData.items,
         maxweight = QBCore.Config.Player.MaxWeight,
-        slots = MaxInventorySlots,
+        slots = QBCore.Config.Player.MaxInvSlots,
         error = isError,
     })
 end)
@@ -422,8 +422,9 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         ClearPedTasks(ped)
-        TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
+        TriggerServerEvent('inventory:server:AddItem', "snowball", 1)
+        -- TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
+        -- TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
     end, function() -- Cancel
         ClearPedTasks(ped)
         QBCore.Functions.Notify("Canceled", "error")
@@ -659,7 +660,7 @@ for i = 1, 6 do
     RegisterCommand('slot' .. i,function()
         if not PlayerData.metadata["isdead"] and not PlayerData.metadata["inlaststand"] and not PlayerData.metadata["ishandcuffed"] and not IsPauseMenuActive() then
             if i == 6 then
-                i = MaxInventorySlots
+                i = QBCore.Config.Player.MaxInvSlots
             end
             TriggerServerEvent("inventory:server:UseItemSlot", i)
         end

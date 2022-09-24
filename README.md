@@ -383,7 +383,8 @@ Config.AttachmentCrafting = { -- Attachment crafting recipes
     }
 }
 
-MaxInventorySlots = 41 -- Player inventory slot amount
+// Edit this in QB config
+QBCore.Config.Player.MaxInvSlots = 41 -- Player inventory slot amount
 
 BackEngineVehicles = { -- Vehicles which has its engine on back side of the vehicle
     'ninef',
