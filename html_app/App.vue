@@ -89,8 +89,6 @@ export default {
             }
         },
         handleFivemMessages(event) {
-            console.log(event.data.action)
-            console.log(JSON.stringify(event.data))
             switch (event.data.action) {
                 case "open":
                     this.reqItems = null;
@@ -100,7 +98,6 @@ export default {
                     this.close()
                     break;
                 case "update":
-                    console.log(event.data)
                     this.$bus.trigger('updateInventory', event.data);
                     if (event.data.error)
                         axios.post("https://qb-inventory/PlayDropFail", {}, this.AXIOS_CONFIG);

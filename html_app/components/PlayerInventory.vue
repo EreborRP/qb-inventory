@@ -3,28 +3,32 @@
         <div id="qbcore-inventory">
             <div class="inventory-info">
                 <div class="player-inv-info">
-                    <span id="player-inv-label">{{ i18n.playerInventory.player_inventory }}</span><br>
+                    <div style="display:flex; flex-direction: row;">
+                        <div id="player-inv-label">{{ i18n.playerInventory.player_inventory }}</div>
+                        <div id="player-inv-weight">
+                            ⚖️: {{ (totalWeight / 1000).toFixed(2) }} / {{ (playerInventory.maxweight / 1000).toFixed(2) }}
+                        </div>
+                    </div>
                     <img class="weight-img" src="images/weight.png">
                     <div>
                         <div class="progressbar">
                             <div class="pro" :style="{width: (totalWeight/1000)/(playerInventory.maxweight/100000)+'%'}"></div>
                         </div>
                     </div>
-                    <span id="player-inv-weight">
-                        ⚖️: {{ (totalWeight / 1000).toFixed(2) }} / {{ (playerInventory.maxweight / 1000).toFixed(2) }}
-                    </span>
                 </div>
                 <div class="other-inv-info">
-                    <span id="other-inv-label">{{ openedInventory.label }}</span><br>
+                    <div style="display:flex; flex-direction: row;">
+                        <div id="other-inv-label">{{ openedInventory.label }}</div>
+                        <div id="other-inv-weight" v-if="!isDisableDropInventory(openedInventory.type)" >
+                        ⚖️: {{ (totalWeightOther / 1000).toFixed(2) }} / {{ (openedInventory.maxweight / 1000).toFixed(2) }}
+                        </div>
+                    </div>
                     <img class="weight-img" src="images/weight.png">
                     <div>
                         <div class="progressbar">
                             <div class="pro1" :style="{width: (totalWeightOther/1000)/(openedInventory.maxweight/100000)+'%'}"></div>
                         </div>
                     </div>
-                    <span id="other-inv-weight" v-if="!isDisableDropInventory(openedInventory.type)">
-                        ⚖️: {{ (totalWeightOther / 1000).toFixed(2) }} / {{ (openedInventory.maxweight / 1000).toFixed(2) }}
-                    </span>
                 </div>
             </div>
 

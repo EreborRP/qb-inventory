@@ -376,13 +376,12 @@ body {
 }
 
 #player-inv-weight {
-	color: #ffffff00;
+	color: #ffffff;
 	font-size: 12px;
 	font-weight: 900;
 	font-family: 'Poppins', sans-serif;
 	letter-spacing: 0.2vh;
     width: 50vh;
-	float: left;
 }
 
 #other-inv-label {
@@ -399,7 +398,7 @@ body {
 }
 
 #other-inv-weight {
-	color: #ff000000;
+	color: #ff0000;
 	font-size: 12px;
 	font-weight: 900;
 	font-family: 'Poppins', sans-serif;
@@ -407,7 +406,7 @@ body {
 	float: left;
 }
 
-.player-inv-weight {
+/* .player-inv-weight {
 	position: absolute;
 	left: 38%;
 	top: 12%;
@@ -417,7 +416,7 @@ body {
 	color: white;
 	font-size: 12px;
 	font-family: 'Poppins', sans-serif;
-}
+} */
 
 .other-inv-info {
 	position: absolute;
